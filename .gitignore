@@ -1,0 +1,50 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+
+# next.js
+/.next/
+/out/
+next-env.d.ts
+
+# production
+/build
+
+# local data captured by the project-brief API (never commit client leads)
+/data/
+
+# misc
+.DS_Store
+*.pem
+Thumbs.db
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files
+.env
+.env*.local
+
+# typescript
+*.tsbuildinfo
+
+# editor
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# local tooling scratch files
+/.diagnostics.ps1
+/.setup-node.ps1
+/.node-install.ps1
+/.ci.bat
+/.ci-check.bat
+/.verify.bat
+/.smoke.bat
+/.smoke.ps1
+/.final.ps1
+/.vscode/tasks.json

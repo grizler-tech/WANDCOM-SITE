@@ -1,0 +1,272 @@
+@import 'tailwindcss';
+
+/* ==========================================================================
+   WANDCOM design tokens (Tailwind v4 @theme)
+   Minimal + premium + digital + youthful. Dark canvas, one signal accent,
+   light sections used strategically to break the page into chapters.
+   ========================================================================== */
+
+@theme {
+  /* --- surfaces ------------------------------------------------------- */
+  --color-ink: #07080a;
+  --color-ink-soft: #0c0e13;
+  --color-ink-card: #111318;
+  --color-line: #23262e;
+  --color-line-soft: #1a1d23;
+
+  --color-paper: #f5f6f8;
+  --color-paper-soft: #eceef1;
+  --color-paper-line: #dcdfe4;
+
+  /* --- type ----------------------------------------------------------- */
+  --color-fg: #f7f8fa;
+  --color-fg-muted: #9ba1ac;
+  --color-fg-invert: #07080a;
+  --color-fg-invert-muted: #565c66;
+
+  /* --- brand accent --------------------------------------------------- */
+  --color-accent: #c8ff4d;
+  --color-accent-deep: #a5e022;
+  --color-accent-soft: rgba(200, 255, 77, 0.12);
+
+  /* --- fonts ---------------------------------------------------------- */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
+    Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, 'SFMono-Regular', 'Cascadia Mono', Menlo, Consolas,
+    'Liberation Mono', monospace;
+
+  /* --- shape ---------------------------------------------------------- */
+  --radius-card: 1.25rem;
+  --radius-pill: 999px;
+
+  /* --- motion --------------------------------------------------------- */
+  --animate-marquee: marquee 38s linear infinite;
+  --animate-pulse-soft: pulse-soft 4s ease-in-out infinite;
+  --animate-float: float 7s ease-in-out infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes pulse-soft {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+@layer base {
+  * {
+    border-color: var(--color-line);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Offsets in-page anchors so the sticky header never covers a heading. */
+    scroll-padding-top: 6rem;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background-color: var(--color-ink);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-fg-invert);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* Respect the operating-system motion preference. */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* ==========================================================================
+   Layout + reusable primitives
+   ========================================================================== */
+
+@layer components {
+  /* Page gutter: 1.25rem on phones, up to 2.5rem on desktop. */
+  .shell {
+    width: 100%;
+    max-width: 84rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  @media (min-width: 640px) {
+    .shell {
+      padding-inline: 2rem;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .shell {
+      padding-inline: 2.5rem;
+    }
+  }
+
+  /* Vertical rhythm shared by every section. */
+  .section-y {
+    padding-block: clamp(4.5rem, 9vw, 8.5rem);
+  }
+
+  /* Small uppercase mono label that opens most sections. */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-fg-muted);
+  }
+
+  .eyebrow::before {
+    content: '';
+    width: 1.5rem;
+    height: 1px;
+    background: var(--color-accent);
+  }
+
+  /* Light "chapter" sections */
+  .on-paper {
+    background-color: var(--color-paper);
+    color: var(--color-fg-invert);
+  }
+
+  .on-paper .eyebrow {
+    color: var(--color-fg-invert-muted);
+  }
+
+  .on-paper .eyebrow::before {
+    background: var(--color-fg-invert);
+  }
+
+  .on-paper :focus-visible {
+    outline-color: var(--color-fg-invert);
+  }
+
+  /* Hairline grid used behind hero and CTA blocks. */
+  .grid-bg {
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+    background-size: 72px 72px;
+  }
+
+  .on-paper .grid-bg {
+    background-image:
+      linear-gradient(to right, rgba(7, 8, 10, 0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(7, 8, 10, 0.06) 1px, transparent 1px);
+  }
+
+  /* Cards */
+  .card {
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    background: var(--color-ink-card);
+  }
+
+  .card-hover {
+    transition:
+      border-color 0.25s ease,
+      background-color 0.25s ease,
+      transform 0.25s ease;
+  }
+
+  .card-hover:hover {
+    border-color: rgba(200, 255, 77, 0.45);
+  }
+
+  .on-paper .card {
+    background: #ffffff;
+    border-color: var(--color-paper-line);
+  }
+
+  .on-paper .card-hover:hover {
+    border-color: rgba(7, 8, 10, 0.35);
+  }
+
+  /* Long-form copy measure */
+  .prose-wandcom p {
+    color: var(--color-fg-muted);
+    line-height: 1.75;
+  }
+
+  .on-paper .prose-wandcom p {
+    color: var(--color-fg-invert-muted);
+  }
+}
+
+/* ==========================================================================
+   Utilities
+   ========================================================================== */
+
+@utility text-balance-tight {
+  text-wrap: balance;
+  letter-spacing: -0.035em;
+}
+
+@utility edge-fade-x {
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+
